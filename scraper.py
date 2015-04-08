@@ -39,20 +39,23 @@ for block in blocks:
 	fileBlocks = soup2.findAll('div',{'class':'attachment-details'})
 	
 	for fileBlock in fileBlocks:
-	  fileUrl = fileBlock.a['href']
-	  title = fileBlock.h2.contents[0]
-	  
-	  fileUrl = fileUrl.replace("/government","http://www.gov.uk/government")
-	
-	  # create the right strings for the new filename
-	  csvYr = title.split(' ')[-1]
-	  csvMth = title.split(' ')[-2][:3]
-	  csvMth = convert_mth_strings(csvMth);
-	
-	  filename = entity_id + "_" + csvYr + "_" + csvMth
-	
-	  todays_date = str(datetime.now())
-	
-	  scraperwiki.sqlite.save(unique_keys=['l'], data={"l": fileUrl, "f": filename, "d": todays_date })
-	
-	  print filename
+		if 'Download CSV' in fileBlock:
+			continue		
+		else:	
+			fileUrl = fileBlock.a['href']
+			title = fileBlock.h2.contents[0]
+		
+			fileUrl = fileUrl.replace("/government","http://www.gov.uk/government")
+		
+			# create the right strings for the new filename
+			csvYr = title.split(' ')[-1]
+			csvMth = title.split(' ')[-2][:3]
+			csvMth = convert_mth_strings(csvMth);
+		
+			filename = entity_id + "_" + csvYr + "_" + csvMth
+		
+			todays_date = str(datetime.now())
+		
+			scraperwiki.sqlite.save(unique_keys=['l'], data={"l": fileUrl, "f": filename, "d": todays_date })
+		
+			print filename
