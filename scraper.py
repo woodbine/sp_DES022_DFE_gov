@@ -40,8 +40,6 @@ for block in blocks:
 	
 	for fileBlock in fileBlocks:
 		if 'Download CSV' in fileBlock:
-			continue		
-		else:	
 			fileUrl = fileBlock.a['href']
 			title = fileBlock.h2.contents[0]
 		
@@ -59,3 +57,5 @@ for block in blocks:
 			scraperwiki.sqlite.save(unique_keys=['l'], data={"l": fileUrl, "f": filename, "d": todays_date })
 		
 			print filename
+		else:
+			continue
