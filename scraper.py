@@ -39,7 +39,7 @@ for block in blocks:
 	fileBlocks = soup2.findAll('div',{'class':'attachment-details'})
 	
 	for fileBlock in fileBlocks:
-		if 'Download CSV' in fileBlock:
+		if fileBlock.contains('Download CSV'):
 			fileUrl = fileBlock.a['href']
 			title = fileBlock.h2.contents[0]
 		
