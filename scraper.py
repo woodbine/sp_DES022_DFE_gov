@@ -42,7 +42,7 @@ for block in blocks:
 		fileUrl = fileBlock.a['href']
 		title = fileBlock.h2.contents[0]
 		fileUrl = fileUrl.replace("/government","http://www.gov.uk/government")
-		titleTest = title.find('a')
+		titleTest = title.find('Download CSV')
 		print title
 		print titleTest
 		
