@@ -44,9 +44,7 @@ for block in blocks:
 		fileUrl = fileUrl.replace("/government","http://www.gov.uk/government")
 		print title
 		
-		if title.has_attr('href'):
-			print "not a csv"
-		else:
+		if title.a['href'] == None:
 			# create the right strings for the new filename
 			csvYr = title.split(' ')[-1]
 			csvMth = title.split(' ')[-2][:3]
@@ -57,3 +55,5 @@ for block in blocks:
 			todays_date = str(datetime.now())
 		
 			scraperwiki.sqlite.save(unique_keys=['l'], data={"l": fileUrl, "f": filename, "d": todays_date })
+		else:
+			print 'not a csv'
