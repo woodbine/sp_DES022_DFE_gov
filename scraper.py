@@ -44,7 +44,7 @@ for block in blocks:
 		fileUrl = fileUrl.replace("/government","http://www.gov.uk/government")
 		print title
 		
-		if title.has_attr('href')
+		if title.has_attr('href'):
 			print "not a csv"
 		else:
 			# create the right strings for the new filename
