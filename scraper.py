@@ -40,9 +40,11 @@ for block in blocks:
 	
 	for fileBlock in fileBlocks:
 		fileUrl = fileBlock.a['href']
-		title = fileBlock.h2.contents[0].strip()
 		fileUrl = fileUrl.replace("/government","http://www.gov.uk/government")
 		fileUrl = fileUrl.replace(".csv/preview",".csv")
+		
+		title = fileBlock.h2.contents[0]
+		title = title.strip()
 		titleTest = title.find('Download CSV')
 		
 		if titleTest == None:
