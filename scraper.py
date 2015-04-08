@@ -58,4 +58,4 @@ for block in blocks:
 		
 			print filename
 		else:
-			continue
+			print "not a csv"
