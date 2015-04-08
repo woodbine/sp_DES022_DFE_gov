@@ -44,13 +44,13 @@ for block in blocks:
 		fileUrl = fileUrl.replace(".csv/preview",".csv")
 		
 		title = fileBlock.h2.contents[0]
-		title = title.strip()
 		titleTest = title.find('Download CSV')
 		
 		if titleTest == None:
 			print 'not a csv'
 		else:
 			# create the right strings for the new filename
+			title = title.strip()
 			csvYr = title.split(' ')[-1]
 			csvMth = title.split(' ')[-2][:3]
 			csvMth = convert_mth_strings(csvMth);
