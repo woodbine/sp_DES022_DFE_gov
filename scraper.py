@@ -42,6 +42,7 @@ for block in blocks:
 		fileUrl = fileBlock.a['href']
 		title = fileBlock.h2.contents[0]
 		fileUrl = fileUrl.replace("/government","http://www.gov.uk/government")
+		print title
 		
 		if title.contains('Download CSV'):
 			# create the right strings for the new filename
