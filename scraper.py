@@ -39,12 +39,11 @@ for block in blocks:
 	fileBlocks = soup2.findAll('div',{'class':'attachment-details'})
 	
 	for fileBlock in fileBlocks:
-		if fileBlock.contains('Download CSV'):
-			fileUrl = fileBlock.a['href']
-			title = fileBlock.h2.contents[0]
+		fileUrl = fileBlock.a['href']
+		title = fileBlock.h2.contents[0]
+		fileUrl = fileUrl.replace("/government","http://www.gov.uk/government")
 		
-			fileUrl = fileUrl.replace("/government","http://www.gov.uk/government")
-		
+		if title.contains('Download CSV'):
 			# create the right strings for the new filename
 			csvYr = title.split(' ')[-1]
 			csvMth = title.split(' ')[-2][:3]
