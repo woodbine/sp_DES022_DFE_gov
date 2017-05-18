@@ -84,7 +84,7 @@ def convert_mth_strings ( mth_string ):
 #### VARIABLES 1.0
 
 entity_id = "DES022_DFE_gov"
-url = "https://www.gov.uk/government/collections/dfe-department-and-executive-agency-spend-over-25-000"
+url = "https://data.gov.uk/dataset/financial-transactions-data-dfe"
 errors = 0
 data = []
 
@@ -96,28 +96,21 @@ soup = BeautifulSoup(html, 'lxml')
 
 #### SCRAPE DATA
 
-blocks = soup.findAll('li', {'class': 'publication document-row'})
+blocks = soup.select('div.dataset-resource-text')
 for block in blocks:
-    link = block.a['href']
-    pageUrl = link.replace("/preview", "")
-    pageUrl = pageUrl.replace("/government", "http://www.gov.uk/government")
-    html2 = urllib2.urlopen(pageUrl)
-    soup2 = BeautifulSoup(html2, 'lxml')
-    fileBlocks = soup2.findAll('div',{'class': 'attachment-details'})
-    for fileBlock in fileBlocks:
-        fileUrl = fileBlock.a['href']
-        fileUrl = fileUrl.replace("/government", "http://www.gov.uk/government")
-        fileUrl = fileUrl.replace(".csv/preview", ".csv")
-        title = fileBlock.h2.contents[0]
-        titleTest = title.find('Download CSV')
-        if titleTest == None:
-            pass
-        else:
-            title = title.strip()
-            csvYr = title.split(' ')[-1]
-            csvMth = title.split(' ')[-2][:3]
-            csvMth = convert_mth_strings(csvMth.upper())
-            data.append([csvYr, csvMth, fileUrl])
+    link = block.find_next('a').find_next('a')['href']
+    if '.csv' in link:
+        link_text = block.find('span', 'inner-cell').text.strip()
+        csvYr = link_text.split()[-1]
+        csvMth = link_text.split()[-2][:3]
+        if '12th' in csvYr:
+            csvMth = 'May'
+            csvYr = '2010'
+        if 'April 2010 to 11th May 2010' in link_text:
+            csvMth = 'Q0'
+            csvYr = '2010'
+        csvMth = convert_mth_strings(csvMth.upper())
+        data.append([csvYr, csvMth, link])
 
 #### STORE DATA 1.0
 
